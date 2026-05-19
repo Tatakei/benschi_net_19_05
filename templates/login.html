@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benschi | Access Terminal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #050608;
+            --panel: rgba(15, 17, 26, 0.7);
+            --accent: #00f2ff;
+            --accent-glow: rgba(0, 242, 255, 0.4);
+            --secondary: #7000ff;
+            --secondary-glow: rgba(112, 0, 255, 0.4);
+            --text: #e0e0e0;
+            --text-dim: rgba(224, 224, 224, 0.5);
+            --success: #00ff88;
+            --card-border: rgba(255, 255, 255, 0.08);
+            --error: #ff4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image:
+                    radial-gradient(at 0% 0%, var(--secondary-glow) 0px, transparent 40%),
+                    radial-gradient(at 100% 100%, var(--accent-glow) 0px, transparent 40%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--panel);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--accent);
+            text-shadow: 0 0 15px var(--accent-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: var(--text-dim);
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--accent);
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            margin-left: 4px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            color: var(--text-dim);
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .matrix-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            color: var(--text);
+            border-radius: 12px;
+            padding: 14px 15px 14px 45px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .matrix-input:focus {
+            border-color: var(--accent);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);
+        }
+
+        .matrix-input:focus + i {
+            color: var(--accent);
+        }
+
+        .login-btn {
+            width: 100%;
+            background: rgba(112, 0, 255, 0.15);
+            color: #fff;
+            border: 1px solid var(--secondary);
+            padding: 16px;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .login-btn:hover {
+            background: var(--secondary);
+            box-shadow: 0 0 25px var(--secondary-glow);
+            transform: translateY(-2px);
+        }
+
+        .version-badge {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: var(--text-dim);
+            font-family: monospace;
+            font-size: 12px;
+            opacity: 0.5;
+        }
+
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card" id="loginCard">
+    <div class="login-header">
+        <div class="logo">
+            <i class="fas fa-cube"></i>Benschi
+        </div>
+        <p>Authentication Required</p>
+    </div>
+
+    <!-- Added method and action -->
+    <form id="loginForm" method="POST" action="/login">
+        <div class="form-group">
+            <label>Email Address</label>
+            <div class="input-wrapper">
+                <!-- Added name="email" -->
+                <input type="email" name="email" class="matrix-input" placeholder="user@benschi.io" required>
+                <i class="fas fa-envelope"></i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Username</label>
+            <div class="input-wrapper">
+                <!-- Added name="username" -->
+                <input type="text" name="username" class="matrix-input" placeholder="tatakei1" required>
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <div class="input-wrapper">
+                <!-- Added name="password" -->
+                <input type="password" name="password" class="matrix-input" placeholder="••••••••" required>
+                <i class="fas fa-lock"></i>
+            </div>
+        </div>
+
+        <button type="submit" class="login-btn" id="submitBtn">
+            <span>Login</span>
+            <i class="fas fa-arrow-right"></i>
+        </button>
+    </form>
+</div>
+
+<div class="version-badge">Build: NeoForge-1.21.1-STABLE</div>
+
+<script>
+    const loginForm = document.getElementById('loginForm');
+    const loginCard = document.getElementById('loginCard');
+    const submitBtn = document.getElementById('submitBtn');
+
+    loginForm.addEventListener('submit', (e) => {
+        // Prevent immediate submission to show the animation
+        e.preventDefault();
+
+        submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Authorizing...';
+        submitBtn.style.opacity = '0.7';
+        submitBtn.style.pointerEvents = 'none';
+
+        // Brief delay for effect, then submit the real form
+        setTimeout(() => {
+            loginForm.submit();
+        }, 1200);
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth) * 100;
+        const y = (e.clientY / window.innerHeight) * 100;
+        document.body.style.backgroundPosition = `${x}% ${y}%`;
+    });
+</script>
+</body>
+</html>

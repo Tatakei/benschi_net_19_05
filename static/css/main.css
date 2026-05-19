@@ -1,0 +1,61 @@
+.break_line {
+
+}
+
+.text__cursive {
+
+}
+
+.textbox__icon {
+
+}
+
+.textarea__textbox_icon {
+
+}
+
+.text__general {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    color: #9ca3af;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+
+    letter-spacing: 0.15em;
+
+    line-height: 1rem;
+}
+
+.text__cursive {
+    font-style: italic;
+}
+
+.textbox__icon {
+    display: flex;
+    flex-direction: row;
+
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    color: #9ca3af;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+
+    letter-spacing: 0.15em;
+
+    line-height: 1rem;
+}
+
+.textbox__icon__textarea {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    color: #9ca3af;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+
+    letter-spacing: 0.15em;
+
+    line-height: 1rem;
+}

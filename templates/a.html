@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Validator Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050608;
+            --panel: rgba(15, 17, 26, 0.8);
+            --accent: #00f2ff;
+            --accent-glow: rgba(0, 242, 255, 0.4);
+            --secondary: #7000ff;
+            --secondary-glow: rgba(112, 0, 255, 0.4);
+            --text: #e0e0e0;
+            --text-dim: rgba(224, 224, 224, 0.5);
+            --success: #00ff88;
+            --error: #ff4444;
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            background-image:
+                    radial-gradient(at 0% 0%, var(--secondary-glow) 0px, transparent 40%),
+                    radial-gradient(at 100% 100%, var(--accent-glow) 0px, transparent 40%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 40px;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        header { margin-bottom: 50px; border-left: 4px solid var(--accent); padding-left: 20px; }
+        h1 { font-size: 2rem; letter-spacing: -1px; }
+        p { color: var(--text-dim); margin-top: 5px; }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 30px;
+            padding-bottom: 100px;
+        }
+
+        .btn-box {
+            background: var(--panel);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            transition: transform 0.2s ease;
+        }
+        .btn-box:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); }
+        .label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); }
+
+        /* --- THE 25 BUTTON STYLES --- */
+
+        button { position: relative; cursor: pointer; border: none; font-family: 'Inter', sans-serif; transition: all 0.2s ease; }
+
+        /* 1. Neon Edge */
+        .btn-1 { background: transparent; color: var(--accent); border: 2px solid var(--accent); padding: 10px 20px; text-transform: uppercase; font-weight: 700; box-shadow: 0 0 10px var(--accent-glow); }
+        .btn-1:hover { background: var(--accent); color: #000; box-shadow: 0 0 25px var(--accent); }
+
+        /* 2. Ghost Purple */
+        .btn-2 { background: rgba(112, 0, 255, 0.1); color: var(--secondary); padding: 10px 25px; border-radius: 4px; border: 1px solid var(--secondary); }
+        .btn-2:hover { background: var(--secondary); color: #fff; }
+
+        /* 3. Cyber Slice */
+        .btn-3 { background: var(--accent); color: #000; padding: 12px 28px; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); font-weight: 900; }
+        .btn-3:hover { transform: skewX(-5deg); filter: brightness(1.2); }
+
+        /* 4. Scanning Line */
+        .btn-4 { background: #111; color: var(--success); padding: 10px 20px; border: 1px solid var(--success); overflow: hidden; }
+        .btn-4::after { content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%; background: linear-gradient(transparent, var(--success), transparent); opacity: 0.2; animation: scan 2s infinite; }
+        @keyframes scan { 0% { top: -100%; } 100% { top: 100%; } }
+
+        /* 5. Minimal Dot */
+        .btn-5 { background: #fff; color: #000; padding: 10px 30px; border-radius: 50px; font-weight: 600; }
+        .btn-5::before { content: ''; position: absolute; left: 10px; top: 45%; width: 4px; height: 4px; background: var(--secondary); border-radius: 50%; }
+
+        /* 6. Heavy Industrial */
+        .btn-6 { background: #222; color: #777; border-bottom: 4px solid #000; padding: 12px 20px; font-family: monospace; }
+        .btn-6:active { border-bottom-width: 0; transform: translateY(4px); }
+
+        /* 7. Glow Pulse */
+        .btn-7 { background: var(--accent); color: #000; padding: 10px 20px; border-radius: 8px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--accent-glow); } 70% { box-shadow: 0 0 0 15px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+        /* 8. Glass Morph */
+        .btn-8 { background: rgba(255,255,255,0.05); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 10px 20px; }
+        .btn-8:hover { background: rgba(255,255,255,0.1); }
+
+        /* 9. Underline Draw */
+        .btn-9 { background: transparent; color: #fff; padding: 10px 5px; }
+        .btn-9::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--accent); transition: 0.3s; }
+        .btn-9:hover::after { width: 100%; }
+
+        /* 10. Split Reveal */
+        .btn-10 { background: #fff; color: #000; padding: 10px 25px; font-weight: 800; overflow: hidden; }
+        .btn-10:hover { letter-spacing: 3px; }
+
+        /* 11. Retro Terminal */
+        .btn-11 { background: #000; color: var(--success); border: 1px solid var(--success); font-family: 'JetBrains Mono'; font-size: 12px; }
+        .btn-11::before { content: '> '; }
+
+        /* 12. Liquid Gradient */
+        .btn-12 { background: linear-gradient(45deg, var(--secondary), var(--accent)); color: #fff; padding: 11px 22px; border-radius: 4px; }
+
+        /* 13. Double Border */
+        .btn-13 { background: transparent; color: #fff; padding: 8px 18px; border: 1px solid #fff; outline: 1px solid #fff; outline-offset: 4px; margin: 5px; }
+
+        /* 14. Glitch */
+        .btn-14 { background: #ff0055; color: #fff; padding: 10px 20px; }
+        .btn-14:hover { text-shadow: 2px 2px #00f2ff, -2px -2px #7000ff; }
+
+        /* 15. Corner Brackets */
+        .btn-15 { background: transparent; color: var(--accent); padding: 10px 25px; }
+        .btn-15::before { content: '['; position: absolute; left: 0; transition: 0.3s; }
+        .btn-15::after { content: ']'; position: absolute; right: 0; transition: 0.3s; }
+        .btn-15:hover::before { left: -5px; }
+        .btn-15:hover::after { right: -5px; }
+
+        /* 16. Pixel Block */
+        .btn-16 { background: var(--secondary); color: #fff; padding: 10px 20px; box-shadow: 4px 4px 0 #000; }
+
+        /* 17. Shadow Shift */
+        .btn-17 { background: #fff; color: #000; padding: 10px 20px; box-shadow: -5px 5px 0 var(--accent); }
+        .btn-17:active { box-shadow: 0 0 0 transparent; transform: translate(-5px, 5px); }
+
+        /* 18. Outline Tech */
+        .btn-18 { border: 1px solid var(--text-dim); color: var(--text-dim); padding: 10px 20px; border-radius: 20px; }
+        .btn-18:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* 19. Nuclear */
+        .btn-19 { background: #f7d02c; color: #000; font-weight: 900; padding: 10px 20px; clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%); }
+
+        /* 20. Vertical Text (Small) */
+        .btn-20 { background: var(--accent); color: #000; padding: 5px 15px; font-size: 10px; writing-mode: vertical-rl; text-orientation: mixed; height: 50px; }
+
+        /* 21. Blur In */
+        .btn-21 { background: transparent; color: #fff; filter: blur(2px); transition: 0.5s; }
+        .btn-21:hover { filter: blur(0); scale: 1.1; }
+
+        /* 22. Dot Matrix */
+        .btn-22 { background: repeating-radial-gradient(circle, var(--accent) 0, var(--accent) 1px, transparent 1px, transparent 100%); background-size: 4px 4px; color: #fff; border: 1px solid var(--accent); padding: 10px 20px; background-color: #000; }
+
+        /* 23. Gradient Border */
+        .btn-23 { background: #050608; padding: 10px 20px; border-radius: 8px; z-index: 1; }
+        .btn-box-23 { position: relative; padding: 2px; background: linear-gradient(to right, var(--accent), var(--secondary)); border-radius: 10px; }
+
+        /* 24. Skewed Metal */
+        .btn-24 { background: linear-gradient(#444, #222); color: #ddd; padding: 10px 25px; transform: skewX(-15deg); border-left: 5px solid var(--accent); }
+
+        /* 25. Cyber Tag */
+        .btn-25 { background: #1a1a1a; color: var(--accent); padding: 5px 15px; font-family: monospace; border-left: 2px solid var(--accent); font-size: 12px; }
+        .btn-25::after { content: ' v1.0'; color: var(--text-dim); font-size: 8px; }
+
+        /* Notification Toast */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--panel);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 15px 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            display: none;
+            z-index: 1000;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="toast">DATA VALIDATED -> YAML GENERATED</div>
+
+<div class="container">
+    <header>
+        <h1>Validation Matrix</h1>
+        <p>25 Variants of Data Confirmation Buttons</p>
+    </header>
+
+    <div class="button-grid">
+        <!-- Buttons will be generated by JS to keep the file clean,
+             but you can manually place them too -->
+    </div>
+</div>
+
+<script>
+    const grid = document.querySelector('.button-grid');
+
+    // Button metadata
+    const btnStyles = [
+        { id: 1, name: "Neon Edge" }, { id: 2, name: "Ghost Purple" },
+        { id: 3, name: "Cyber Slice" }, { id: 4, name: "Scanning Line" },
+        { id: 5, name: "Minimal Dot" }, { id: 6, name: "Industrial" },
+        { id: 7, name: "Glow Pulse" }, { id: 8, name: "Glass Morph" },
+        { id: 9, name: "Underline" }, { id: 10, name: "Split Reveal" },
+        { id: 11, name: "Terminal" }, { id: 12, name: "Liquid" },
+        { id: 13, name: "Double" }, { id: 14, name: "Glitch" },
+        { id: 15, name: "Brackets" }, { id: 16, name: "Pixel" },
+        { id: 17, name: "Shadow" }, { id: 18, name: "Outline" },
+        { id: 19, name: "Nuclear" }, { id: 20, name: "Vertical" },
+        { id: 21, name: "Blur" }, { id: 22, name: "Matrix" },
+        { id: 23, name: "G-Border" }, { id: 24, name: "Skewed" },
+        { id: 25, name: "Cyber Tag" }
+    ];
+
+    // Generate Buttons
+    btnStyles.forEach(style => {
+        const box = document.createElement('div');
+        box.className = 'btn-box';
+
+        const label = document.createElement('span');
+        label.className = 'label';
+        label.innerText = `Style ${style.id}: ${style.name}`;
+
+        const btn = document.createElement('button');
+        btn.className = `btn-${style.id}`;
+        btn.innerText = "VALIDATE";
+
+        // Special wrapper for style 23
+        if(style.id === 23) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'btn-box-23';
+            wrapper.appendChild(btn);
+            box.appendChild(label);
+            box.appendChild(wrapper);
+        } else {
+            box.appendChild(label);
+            box.appendChild(btn);
+        }
+
+        btn.onclick = () => validateData(style.name);
+        grid.appendChild(box);
+    });
+
+    // Validation & YAML Logic
+    function validateData(styleName) {
+        // Mock data validation
+        const mockData = {
+            id: Math.random().toString(36).substr(2, 9).toUpperCase(),
+            timestamp: new Date().toISOString(),
+            status: "validated",
+            ui_variant: styleName,
+            system: "Matrix-v3"
+        };
+
+        // Convert to YAML string
+        const yamlString = `
+---
+entry:
+  id: "${mockData.id}"
+  timestamp: ${mockData.timestamp}
+  meta:
+    status: "${mockData.status}"
+    style_used: "${mockData.ui_variant}"
+    validated: true
+...`.trim();
+
+        console.log("%c YAML EXPORT GENERATED ", "background: #00ff88; color: #000; font-weight: bold;");
+        console.log(yamlString);
+
+        // UI Feedback
+        const toast = document.getElementById('toast');
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+</script>
+</body>
+</html> 

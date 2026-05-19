@@ -1,0 +1,190 @@
+Dimensional Chest:
+- id: 100000
+  freq: 1
+  label: versehen
+  user: Unknown
+- id: 100019
+  freq: 2
+  label: Allgemein
+  user: Unknown
+- id: 100020
+  freq: 3
+  label: Allgemein
+  user: Unknown
+- id: 100021
+  freq: 11
+  label: Prod. Bees
+  user: Unknown
+- id: 100046
+  freq: 16
+  label: Pneumatic Refinery
+  user: Unknown
+- id: 100001
+  freq: 101
+  label: Prediction Matrix
+  user: Unknown
+- id: 100002
+  freq: 102
+  label: Glass Bottle
+  user: Unknown
+- id: 100003
+  freq: 103
+  label: Raw Materials (ver-6-bar)
+  user: Unknown
+- id: 100004
+  freq: 104
+  label: Soul log
+  user: Unknown
+- id: 100005
+  freq: 105
+  label: Soul sand
+  user: Unknown
+- id: 100022
+  freq: 106
+  label: Netherite Electrode
+  user: Unknown
+- id: 100024
+  freq: 107
+  label: Arcane Crystal Dust
+  user: Unknown
+- id: 100028
+  freq: 108
+  label: Souls
+  user: Unknown
+- id: 100035
+  freq: 109
+  label: Emerald
+  user: Unknown
+- id: 100044
+  freq: 110
+  label: Raw Mithril
+  user: Unknown
+- id: 100006
+  freq: 301
+  label: "M\xFCll = Refined"
+  user: Unknown
+- id: 100015
+  freq: 401
+  label: Train Track Crafting Ingrediens
+  user: Unknown
+- id: 100016
+  freq: 402
+  label: Train Track done
+  user: Unknown
+- id: 100017
+  freq: 403
+  label: Create Casing Craft Ingredients
+  user: Unknown
+- id: 100018
+  freq: 404
+  label: Create Casing done
+  user: Unknown
+- id: 100047
+  freq: 4
+  label: adda
+  user: tatakei1
+Dimensional Fluid Tank:
+- id: 100010
+  freq: 1
+  label: Honig
+  user: Unknown
+- id: 100011
+  freq: 2
+  label: Other Liquid's
+  user: Unknown
+- id: 100012
+  freq: 3
+  label: Liquified Source
+  user: Unknown
+- id: 100014
+  freq: 4
+  label: Unrefined Liquid Souls
+  user: Unknown
+- id: 100025
+  freq: 5
+  label: Liquid Aureal
+  user: Unknown
+- id: 100027
+  freq: 6
+  label: Liquid Souls
+  user: Unknown
+- id: 100030
+  freq: 7
+  label: Hepha Forge Output
+  user: Unknown
+- id: 100036
+  freq: 8
+  label: Shale Oil
+  user: Unknown
+- id: 100037
+  freq: 9
+  label: Sulfuric Light Fuel
+  user: Unknown
+- id: 100038
+  freq: 10
+  label: Sulfuric Heavy Fuel
+  user: Unknown
+- id: 100039
+  freq: 11
+  label: Sulfuric Naphtha
+  user: Unknown
+- id: 100041
+  freq: 12
+  label: Centrifuge (Auto) | Liquid Air
+  user: Unknown
+- id: 100042
+  freq: 13
+  label: Steam
+  user: Unknown
+- id: 100043
+  freq: 14
+  label: MI - Hydrogen, Oxygen (Electrolyzer)
+  user: Unknown
+- id: 100045
+  freq: 15
+  label: Centrifuge (Auto) | Liquid Air
+  user: Unknown
+- id: 100007
+  freq: 101
+  label: Wasser
+  user: Unknown
+- id: 100008
+  freq: 102
+  label: Lava
+  user: Unknown
+- id: 100009
+  freq: 103
+  label: Ether Gas
+  user: Unknown
+- id: 100023
+  freq: 104
+  label: Liquid Source
+  user: Unknown
+- id: 100026
+  freq: 105
+  label: Unrefined Liquid Souls
+  user: Unknown
+- id: 100029
+  freq: 106
+  label: Refined Souls
+  user: Unknown
+- id: 100031
+  freq: 107
+  label: Liquid Aureal
+  user: Unknown
+- id: 100032
+  freq: 108
+  label: Blood
+  user: Unknown
+- id: 100033
+  freq: 109
+  label: XP Fluid
+  user: Unknown
+- id: 100034
+  freq: 110
+  label: Soul Lava
+  user: Unknown
+- id: 100040
+  freq: 111
+  label: Crude Oil
+  user: Unknown
