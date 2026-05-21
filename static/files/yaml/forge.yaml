@@ -1,0 +1,27 @@
+refined_diamond:
+  duration: 15
+  ingredients:
+    - item: enchanted_diamond_block
+      amount: 2
+
+enchanted_diamond_block:
+  duration: 15
+  ingredients:
+    - item: enchanted_diamond
+      amount: 160
+
+enchanted_diamond:
+  duration: 0
+  ingredients:
+    - item: diamond
+      amount: 160
+
+diamond:
+  duration: 0
+  ingredients: []
+
+mithril_plate:
+  duration: 60
+  ingredients:
+    - item: refined_mithril
+      amount: 160

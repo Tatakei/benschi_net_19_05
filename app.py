@@ -1,9 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, make_response
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, make_response, abort
 import secrets
 import yaml
 import os
 import requests
 import time
+from classes.hypixel import Hypixel
+
+Hypixel.Item.load_registry('static/files/yaml/forge.yaml')
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)
@@ -20,8 +23,8 @@ PERMISSION_LEVELS = {
 }
 
 PERM_MAP = {
-    PERMISSION_LEVELS["user"]: ["bazaar"],
-    PERMISSION_LEVELS["advanced"]: ["minecraft", "bazaar"],
+    PERMISSION_LEVELS["user"]: ["skyblock"],
+    PERMISSION_LEVELS["advanced"]: ["minecraft", "skyblock"],
     PERMISSION_LEVELS["admin"]: ["admin"]
 }
 
@@ -38,12 +41,12 @@ def inject_permissions():
 USERS = {
     "tatakei1": {
         "email": "tatakei1@benschi.io",
-        "pw": "DQ5ijmNLqewBqJ7wX3nR1iczRM6vBfwWDyPxKPca5KUJgX6fc25JborVKUKSObZz",
+        "pw": "Bibersindtoll7",
         "perm": PERMISSION_LEVELS["admin"]
     },
     "folwer08": {
         "email": "folwer08@benschi.io",
-        "pw": "ZBG5ZqZtliI39vBpzivEgfEHlOCWceq6JkhZSb18nJT8POLa4C3eLZTF8NIQpj22",
+        "pw": "PookieMyFav<3",
         "perm": PERMISSION_LEVELS["advanced"]
     },
     "hafemi": {
@@ -118,6 +121,7 @@ def logout():
 
 @app.route('/')
 def index():
+    all_items = Hypixel.Item.get_all()
     sort_order = request.args.get("sort", "desc")
     budget = request.args.get("budget", type=float)
     search_query = request.args.get("search", "").lower()
@@ -136,7 +140,9 @@ def index():
                            items=filtered,
                            sort=sort_order,
                            budget=budget,
-                           search=search_query)
+                           search=search_query,
+                           all_items=all_items,
+                           )
 
 @app.route('/data/get')
 def data_get():
@@ -178,6 +184,23 @@ def data_delete():
         raw_data[cat] = [i for i in raw_data[cat] if i['id'] != item_id]
     save_data(raw_data)
     return jsonify({"message": "Deleted"}), 200
+
+@app.route('/forge/<item_name>')
+def view_forge_item(item_name):
+    item_exists = Hypixel.Item.fetch(item_name)
+
+    if not item_exists:
+        abort(404)
+
+    raw_materials = Hypixel.Forge.get_total_ingredients(item_name)
+    recipe_tree = Hypixel.Forge.generate_recipe_tree(item_name)
+
+    return render_template(
+        'item.html',
+        target='item_name',
+        raw_materials=raw_materials,
+        recipe_tree=recipe_tree
+    )
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)

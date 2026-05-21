@@ -130,8 +130,9 @@
             <li data-target="ae2"><i class="fas fa-network-wired"></i> AE2 Network</li>
             <li data-target="notes"><i class="fas fa-sticky-note"></i> Notes</li>
             {% endif %}
-            {% if has_perm('bazaar') %}
+            {% if has_perm('skyblock') %}
             <li data-target="bazaar"><i class="fas fa-coins"></i> Bazaar</li>
+            <li data-target="forge"><i class="fas fa-hammer"></i> Forge</li>
             {% endif %}
         </ul>
     </nav>
@@ -140,71 +141,101 @@
 <main>
     <header>
         <h1><span id="page-title">Dashboard</span></h1>
-        <div class="version-tag">v1.0.0</div>
+        <div class="version-tag">v1.1.0</div>
     </header>
 
     <!-- Dashboard Content -->
-        <section id="dashboard" class="tab-content">
-            <div class="grid">
-                <div class="card">
-                    <div class="card-header"><h3>Server Status</h3><i class="fas fa-microchip"></i></div>
-                    <div class="stat-val">20.0 <span class="unit">TPS</span></div>
-                    <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
-                </div>
+    <section id="dashboard" class="tab-content">
+        <div class="grid">
+            <div class="card">
+                <div class="card-header"><h3>Server Status</h3><i class="fas fa-microchip"></i></div>
+                <div class="stat-val">20.0 <span class="unit">TPS</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
             </div>
-        </section>
-
-        <!-- Bazaar Section -->
-        <section id="tab-bazaar" class="tab-content">
-            <div class="bz-nav-container">
-                <form action="/" method="get" class="bz-search-box" onsubmit="this.action = '/#bazaar';">
-                    <input type="text" name="search" placeholder="Item name..." value="{{ search }}">
-                    <input type="number" name="budget" placeholder="Budget" style="width: 200px; border-left: 1px solid #222;" value="{{ budget }}">
-                    <button type="submit" class="bz-btn-scan">CHECK</button>
-                </form>
-
-                <div style="display: flex; gap: 8px;">
-                    <a href="/?sort=desc&budget={{ budget or '' }}&search={{ search }}#bazaar" class="bz-btn {% if sort == 'desc' %}active{% endif %}">Top Profit</a>
-                    <a href="/?sort=asc&budget={{ budget or '' }}&search={{ search }}#bazaar" class="bz-btn {% if sort == 'asc' %}active{% endif %}">Lowest</a>
-                </div>
-            </div>
-
-            <div class="bz-grid" id="main-grid"
-                 hx-get="/?sort={{ sort }}&budget={{ budget or '' }}&search={{ search }}"
-                 hx-trigger="every 30s"
-                 hx-select="#main-grid"
-                 hx-swap="outerHTML">
-
-                {% for item in items %}
-                <div class="bz-card">
-                    <div class="bz-card-title">{{ item.name }}</div>
-                    <div class="bz-stat-group">
-                        <div class="bz-stat-row">
-                            <span class="bz-label">Buy Order</span>
-                            <span class="bz-value">{{ "{:,.1f}".format(item.buy_order) }}</span>
-                        </div>
-                        <div class="bz-stat-row">
-                            <span class="bz-label">Sell Order</span>
-                            <span class="bz-value">{{ "{:,.1f}".format(item.sell_order) }}</span>
-                        </div>
-                        <div class="bz-stat-row">
-                            <span class="bz-label">NPC Value</span>
-                            <span class="bz-value">{{ "{:,.1f}".format(item.npc_price) }}</span>
-                        </div>
-                    </div>
-                    <div class="bz-profit-box">
-                        <span class="bz-label" style="font-size: 9px; text-transform: uppercase; font-weight: 900;">Profit</span>
-                        <span class="bz-profit-amt">+{{ "{:,.0f}".format(item.profit) }}</span>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </section>
+        </div>
+    </section>
 
     <!-- Other Sections -->
-    <section id="dimstorage" class="tab-content"><div id="dimstorage__header"></div></section>
-    <section id="ae2" class="tab-content"><div class="card"><h3>ME Network</h3></div></section>
-    <section id="notes" class="tab-content"><div class="card"><textarea id="projectNotes" rows="12"></textarea></div></section>
+    <section id="tab-dimstorage" class="tab-content">
+        <div id="dimstorage__header">
+        </div>
+    </section>
+    <section id="tab-ae2" class="tab-content">
+        <div class="card">
+            <h3>ME Network</h3>
+        </div>
+    </section>
+    <section id="tab-notes" class="tab-content">
+        <div class="card">
+            <textarea id="projectNotes" rows="12"></textarea>
+        </div>
+    </section>
+
+    <!-- Bazaar Section -->
+    <section id="tab-bazaar" class="tab-content">
+        <div class="bz-nav-container">
+            <form action="/" method="get" class="bz-search-box" onsubmit="this.action = '/#bazaar';">
+                <input type="text" name="search" placeholder="Item name..." value="{{ search }}">
+                <input type="number" name="budget" placeholder="Budget" style="width: 200px; border-left: 1px solid #222;" value="{{ budget }}">
+                <button type="submit" class="bz-btn-scan">CHECK</button>
+            </form>
+
+            <div style="display: flex; gap: 8px;">
+                <a href="/?sort=desc&budget={{ budget or '' }}&search={{ search }}#bazaar" class="bz-btn {% if sort == 'desc' %}active{% endif %}">Top Profit</a>
+                <a href="/?sort=asc&budget={{ budget or '' }}&search={{ search }}#bazaar" class="bz-btn {% if sort == 'asc' %}active{% endif %}">Lowest</a>
+            </div>
+        </div>
+
+        <div class="bz-grid" id="main-grid"
+             hx-get="/?sort={{ sort }}&budget={{ budget or '' }}&search={{ search }}"
+             hx-trigger="every 30s"
+             hx-select="#main-grid"
+             hx-swap="outerHTML">
+
+            {% for item in items %}
+            <div class="bz-card">
+                <div class="bz-card-title">{{ item.name }}</div>
+                <div class="bz-stat-group">
+                    <div class="bz-stat-row">
+                        <span class="bz-label">Buy Order</span>
+                        <span class="bz-value">{{ "{:,.1f}".format(item.buy_order) }}</span>
+                    </div>
+                    <div class="bz-stat-row">
+                        <span class="bz-label">Sell Order</span>
+                        <span class="bz-value">{{ "{:,.1f}".format(item.sell_order) }}</span>
+                    </div>
+                    <div class="bz-stat-row">
+                        <span class="bz-label">NPC Value</span>
+                        <span class="bz-value">{{ "{:,.1f}".format(item.npc_price) }}</span>
+                    </div>
+                </div>
+                <div class="bz-profit-box">
+                    <span class="bz-label" style="font-size: 9px; text-transform: uppercase; font-weight: 900;">Profit</span>
+                    <span class="bz-profit-amt">+{{ "{:,.0f}".format(item.profit) }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="tab-forge" class="tab-content">
+        <div class="card">
+            <h3>Forge</h3>
+        </div>
+
+        <div class="bz-grid">
+            <ul class="bz-profit-box">
+                {% for item_name, details in all_items.items() %}
+                <div class="bz-card">
+                    <li>
+                        <a href="/forge/{{ item_name }}">{{ item_name.replace('_', ' ').title() }}</a>
+                        <span style="color: #888;"> (Takes {{ details.duration }}s)</span>
+                    </li>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
 </main>
 
 <script src="/static/js/index.js"></script>
